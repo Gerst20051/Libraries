@@ -1,0 +1,1013 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTM 4.01//EN"  "http://www.w3.org/TR/html4/strict.dtd">
+  
+<!--
+  Drink Making game (AKA SimBar). Author: Ruth. http://www.amazingknife.com and http://youtube.com/ruthj180
+  Make some drinks for your customers. Earn money making drinks and spend money buying supplies and
+  dealing with events. This game runs only in the browser. There is no server it is communicating with, so
+  it will not save your progress if you navigate away or refresh. The game is developed with HTML, CSS,
+  JavaScript and the Dojo Toolkit. Always drink responsibly. Enjoy the game!
+  If you use any of this code for your own projects, please give me credit. If you would like to buy my game,
+  or hire me, please let me know.
+-->  
+<html>
+    <head>
+       		
+        <!-- Author: Ruth. amazingknife.com -->
+		<title>Drink Making Game</title>
+		
+		<!--
+		Thanks Google for hosting the Dojo Toolkit on your CDN (Content Distribution Network).
+		http://code.google.com/apis/ajaxlibs/documentation/
+		-->
+		
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3.1/dijit/themes/tundra/tundra.css" />
+     	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3.1/dojox/widget/Dialog/Dialog.css" />
+     	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3.1/dojo/resources/dojo.css" />
+  		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3.1/dojox/widget/Toaster/Toaster.css" />
+  		
+  		<!-- Author: Ruth. amazingknife.com -->  		
+  		<style type="text/css">
+             
+	   		.counter {                          
+	             margin: 10px;
+	             background: black;
+	             color: white;
+	             padding: 5px;         
+	         }
+	         	   	  
+		   .bigCell {	    
+		    	width: 280px;
+		        height: 40px; 	   	
+		   	} 
+	   
+	   		.regularCell {
+	    		width: 200px;
+	            height: 40px; 
+	   		} 
+	   
+	   		.smallCell {
+	    		width: 150px;
+	            weight: 40px; 
+	   		}               
+   
+        </style>
+        
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.3.1/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>   
+    
+        <!-- Author: Ruth. amazingknife.com -->
+        <script type="text/javascript">
+         
+		    dojo.require("dijit.ProgressBar");
+		    dojo.require("dijit.form.Button");       
+		    dojo.require("dijit.form.MultiSelect");
+		    dojo.require("dijit.Dialog"); 
+		    dojo.require("dijit.form.CheckBox");
+		    dojo.require("dojox.widget.Toaster");
+		    dojo.require("dijit.Tooltip");
+		   
+	        // the require is a different statement. look at the api
+	        //dojo.require("dojox.timing.Timer");
+	   
+	        // regular javascript has a one shot timer:
+	        // setTimeout("alert('hi');", 1000); // one second timer 
+	   
+	        dojo.require("dojo.parser");
+	                    
+	        // Author: Ruth. amazingknife.com                      
+	        var drinkCount = 0;
+	        var moneyTotal = 0.00;
+	   
+	        var customerDrinkToMake = "";
+	   
+		    // The const keyword doesn't work in IE.
+		    // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Statements/const
+		    var BEER_PRICE       = 3;
+		    var WINE_PRICE       = 6;
+		    var COCKTAIL_PRICE   = 8;
+		    // Make all these look like constants
+		    var KEG_PRICE          = 150;
+		    var RUM_BOTTLE_PRICE   = 25;
+		    var GIN_BOTTLE_PRICE   = 25;   
+		    var VODKA_BOTTLE_PRICE = 25;
+		    var WINE_BOTTLE_PRICE  = 20;         
+		    
+		    // A keg equals 124 pints
+		    var PINTS_PER_KEG    = 124;
+		    var beerLeft         = 124;
+		   
+		    // About 6 glasses (4 oz) of wine per 750 ml bottle
+		    var GLASSES_WINE_PER_BOTTLE = 6;
+		    var wineLeft                = 6;
+		   
+		    // 750 ml divided by 30 ml = 25, so 25 drinks per bottle ( 1 oz per drink )      
+		    var SHOTS_PER_BOTTLE = 25;
+		   
+		    var ginLeft          = 25;
+		    var rumLeft          = 25;
+		    var vodkaLeft        = 25;     
+		    
+		    // This makes a random number from 0 to 5 - if 0 or 1 then beer (beer frequency is a little higher)
+		    var randomNumber = Math.floor(Math.random()*6);
+		    
+		    // Make all these look like constants
+		    var beerPhrase       = "The customer would like a beer."
+		    var winePhrase       = "The customer would like a glass of wine."
+		    var ginntonicPhrase  = "The customer would like a gin and tonic."
+		    var rumncokePhrase   = "The customer would like a rum and coke."
+		    var vodkatonicPhrase = "The customer would like a vodka tonic."         
+		    
+		    var needGreenFairy     = false;
+		    var boozillaHappened   = false;
+		    var turnsSinceBoozilla = 0;
+		   
+		    // Popularity is in the range of 0 - 100
+		    var popularityValue = 40;
+		      
+		    var UNPOPULAR     = 20; // 20 or less
+		    var MEDIOCRE      = 50;
+		    var PRETTY_NIFFTY = 70;
+		   
+		    var UNPOPULAR_PHRASE = "People would rather go to a symposium about the amobia than go to your bar.";   
+		    var MEDIOCRE_PHRASE  = "Your bar is kind of popular. But if a hacky sack tournament happens, the customers will probably leave.";   
+		    var NIFFTY_PHRASE    = "Your bar is good, and it is getter better."
+		    var SUPERSTAR_PHRASE = "Your bar is super popular. It is the shizitz! Shake your groove thing."
+		    var SUCK_PHRASE      = "You suck! How did you do that? Your bar is so unpopular you will never recover. Refresh the page to try again."
+		    
+		    // Make all these look like constants   
+		    var beerLabel  = "beer"; 
+		    var wineLabel  = "wine"; 
+		    var ginLabel   = "gin";   
+		    var rumLabel   = "rum";
+		    var vodkaLabel = "vodka";
+		   
+		    var keyPressConnectionHandle = null;
+		   
+		    function tauntBoozilla()
+		    {         
+			    // Need to add a way to show different taunts
+			    //taunt boozilla 
+			    dijit.byId("toast").setContent( "Hey Boozilla! Your mother dresses you funny and you stink!", "message" , 5000 );
+			    dijit.byId("toast").show();
+			    //mytimer.start(); // start the timer
+			      
+			    dijit.byId("toast").setContent( "Boozilla becomes enraged and drinks.", "message" , 5000 );
+			    dijit.byId("toast").show();
+			      
+			    dojo.byId("tauntButton").style.backgroundColor = "";
+			     
+			    // Hide the button again          
+			    dijit.byId("tauntButton").attr("style", "display:none");
+			      
+			    updateBarPopularity( 5 );
+			      
+			    //sarcastic remark, or insult intended to demoralize the recipient and encourage reactionary behaviors without
+			    //thinking.
+			      
+			    //Boozilla, your mother dresses you funny and you stink!
+			      
+			    //What kind of name is Boozilla? Godzilla thinks you're a poo poo head.
+			      
+			    //Boozilla, Boozilla, stick that vodka bottle up your nose!
+			              
+			    //Boozilla becomes enraged and drinks.
+			    
+			    dojo.byId("moneyCounter").style.backgroundColor = "black";    
+			}
+   
+		    // Author: Ruth. amazingknife.com               
+		    function init() {
+		        new dijit.ProgressBar({id: "keg", progress: PINTS_PER_KEG, maximum: PINTS_PER_KEG,
+		            report:function(percent){
+		        return dojo.string.substitute("${0} out of ${1} drinks", [this.progress, this.maximum]);
+			    }}, dojo.byId("keg"));
+			    new dijit.ProgressBar({id: "wineBottle", progress: GLASSES_WINE_PER_BOTTLE, maximum: GLASSES_WINE_PER_BOTTLE, 
+			     report:function(percent){
+			      return dojo.string.substitute("${0} out of ${1} drinks", [this.progress, this.maximum]);
+			     }
+			    }, dojo.byId("wineBottle"));
+			    
+			    new dijit.ProgressBar({id: "ginBottle", progress: SHOTS_PER_BOTTLE, maximum: SHOTS_PER_BOTTLE,
+			     report:function(percent){
+			      return dojo.string.substitute("${0} out of ${1} drinks", [this.progress, this.maximum]);
+			     }
+			    }, dojo.byId("ginBottle"));
+			    
+			    new dijit.ProgressBar({id: "rumBottle", progress: SHOTS_PER_BOTTLE, maximum: SHOTS_PER_BOTTLE,
+			     report:function(percent){
+			      return dojo.string.substitute("${0} out of ${1} drinks", [this.progress, this.maximum]);
+			     }
+			    }, dojo.byId("rumBottle"));
+			    
+    new dijit.ProgressBar({id: "vodkaBottle", progress: SHOTS_PER_BOTTLE, maximum: SHOTS_PER_BOTTLE,
+     report:function(percent){
+      return dojo.string.substitute("${0} out of ${1} drinks", [this.progress, this.maximum]);
+     }
+    }, dojo.byId("vodkaBottle"));     
+          
+//    var mytimer = new dojox.timing.Timer({
+//     setInterval: 5000,
+//     onTick: function () {
+//       alert("here is the interval");
+//     }
+//    });      
+      
+    // Make the Taunt Boozilla button but don't display it yet.
+    var tb = new dijit.form.Button({
+                 label: "Taunt Boozilla (Key = 7)",
+     style: "display:none",
+     onClick: function(){ tauntBoozilla(); }
+    }, dojo.byId("tauntButton"));             
+                     
+    // Give the user a nice start.
+    // Don't offer the possibility for Boozilla or any other craziness yet.
+       setNewDrinkToMake();
+       connectKeyPressHandlers();                    
+   }
+   // Make sure the page is loaded before we set an element.
+   dojo.addOnLoad( init );
+   // Author: Ruth. amazingknife.com 
+   function connectKeyPressHandlers() {
+       
+  // sample code  
+ //   button = dojo.byId('helloButton');
+    // dojo.connect(button, 'onclick', 'helloPressed');
+ 
+// To disconnect listeners from events, you simply pass the connection handle (the return value of dojo.connect to dojo.disconnect.
+ 
+       // "1" is decimal 49 in ascii
+       keyPressConnectionHandle = dojo.connect(document, "onkeypress", function(e) {
+           var key = e.keyCode || e.charCode;
+           if (key == 49) {
+                              
+               dojo.byId("drinks").value = "beer";
+               makeDrink();
+           }
+           else if (key == 50) {
+                              
+               dojo.byId("drinks").value = "wine";
+               makeDrink();
+           }
+           else if (key == 51) {
+                              
+               dojo.byId("drinks").value = "ginntonic";
+               makeDrink();
+           }
+           else if (key == 52) {
+                              
+               dojo.byId("drinks").value = "rumncoke";
+               makeDrink();
+           }
+           else if (key == 53) {
+                              
+               dojo.byId("drinks").value = "vodkatonic";
+               makeDrink();
+           }
+     else if (key == 54) {
+                                             
+               shop();
+           }
+     else if (key == 55) {
+                
+      tauntBoozilla();
+           }     
+       });    
+   }           
+   
+   // Author: Ruth. amazingknife.com 
+   function disableAllControls()
+   {         
+    // disconnect the old keyPress handler otherwise it will do both functions.    
+    dojo.disconnect(keyPressConnectionHandle);
+      
+    dojo.connect(document, "onkeypress", function(e) {
+    });
+    
+    dojo.connect(document, "onclick", function(e) {
+    });            
+    
+    dojo.byId("drinks").style.display = "none";
+    dojo.byId("shopButton").style.display = "none";
+    dojo.byId("tauntButton").style.display = "none";
+    dojo.byId("chooseDrink").style.display = "none";
+    dojo.byId("drinkCounter").style.display = "none";
+    dojo.byId("moneyCounter").style.display = "none";
+    dojo.byId("customerDrink").style.display = "none";
+    
+    dojo.byId("keg").style.display = "none";
+    dojo.byId("wineBottle").style.display = "none";
+    dojo.byId("ginBottle").style.display = "none";
+    dojo.byId("rumBottle").style.display = "none";    
+    dojo.byId("vodkaBottle").style.display = "none";    
+        
+    dojo.byId("beerProgressLabel").style.display = "none";
+    dojo.byId("wineProgressLabel").style.display = "none";    
+    dojo.byId("ginProgressLabel").style.display = "none";
+    dojo.byId("rumProgressLabel").style.display = "none";    
+    dojo.byId("vodkaProgressLabel").style.display = "none";                   
+   } 
+    
+   // Author: Ruth. amazingknife.com  
+   function updateBarPopularity( popValue )
+   {    
+    var previousPopularityValue = popularityValue;
+    popularityValue += popValue;    
+    
+    if ( popularityValue <= 0 ) {
+     
+     // Disable everything.
+     dojo.byId("popularityDisplay").innerHTML = SUCK_PHRASE;
+     popularityValue = 0;
+     disableAllControls();
+    }
+    else if ( ( popularityValue <= UNPOPULAR ) && ( previousPopularityValue > UNPOPULAR ) ) {
+     
+     dojo.byId("popularityDisplay").innerHTML = UNPOPULAR_PHRASE;
+    }
+    else if ( ( ( popularityValue <= MEDIOCRE ) && ( previousPopularityValue > MEDIOCRE ) && ( popularityValue > UNPOPULAR ) )
+       ||
+      ( ( popularityValue <= MEDIOCRE ) && ( popularityValue > UNPOPULAR ) && ( previousPopularityValue <= UNPOPULAR ) ) ) {     
+      
+     dojo.byId("popularityDisplay").innerHTML = MEDIOCRE_PHRASE;      
+    }
+    else if ( ( ( popularityValue <= PRETTY_NIFFTY ) && ( previousPopularityValue > PRETTY_NIFFTY ) && ( popularityValue > MEDIOCRE ) ) 
+       ||
+      ( ( popularityValue <= PRETTY_NIFFTY ) && ( popularityValue > MEDIOCRE ) && ( previousPopularityValue <= MEDIOCRE ) ) ) {
+     
+     dojo.byId("popularityDisplay").innerHTML = NIFFTY_PHRASE;
+    }
+    else if ( ( popularityValue > PRETTY_NIFFTY ) && ( previousPopularityValue <= PRETTY_NIFFTY ) ) {
+    
+     dojo.byId("popularityDisplay").innerHTML = SUPERSTAR_PHRASE;     
+    }
+    else if ( popularityValue > 100 ) {
+     popularityValue = 100; 
+    }
+    
+    dojo.byId("popularityIntegerDisplay").innerHTML = "Bar Popularity = " + popularityValue;
+   } 
+        
+   // Author: Ruth. amazingknife.com
+   // Update the drink count and the alcohol level.           
+      function updateCount() {
+ 
+    var drink = dojo.byId("drinks").value;
+ 
+          if ( drinkCount == 1 )
+          {     
+              dojo.byId("drinkCounter").innerHTML = "You have made " + drinkCount + " drink.";              
+          }
+          else
+          {
+     dojo.byId("drinkCounter").innerHTML = "You have made " + drinkCount + " drinks.";     
+          }
+    
+    if ( drink == "beer" ) {
+     dijit.byId("keg").update({
+       maximum: PINTS_PER_KEG,
+       progress: --beerLeft
+      });      
+    }
+    else if ( drink == "wine" ) {     
+     
+     dijit.byId("wineBottle").update({
+       maximum: GLASSES_WINE_PER_BOTTLE,
+       progress: --wineLeft
+      });          
+    }     
+    else if ( drink == "ginntonic" ) {     
+     
+     dijit.byId("ginBottle").update({
+       maximum: SHOTS_PER_BOTTLE,
+       progress: --ginLeft
+      });     
+    }            
+    else if ( drink == "vodkatonic" ) {     
+     
+     dijit.byId("vodkaBottle").update({
+       maximum: SHOTS_PER_BOTTLE,
+       progress: --vodkaLeft
+      });     
+    } 
+    else if ( drink == "rumncoke" ) {     
+     
+     dijit.byId("rumBottle").update({
+       maximum: SHOTS_PER_BOTTLE,
+       progress: --rumLeft
+      });     
+    }         
+      }
+   // Author: Ruth. amazingknife.com
+   // Based on the listbox selection, return the price
+   // of the drink.
+   function getDrinkPrice() {
+    var drink = dojo.byId("drinks").value;
+    
+    if ( drink == "beer" ) {
+     return BEER_PRICE;
+    }
+    else if ( drink == "wine" ) {
+     
+     return WINE_PRICE;
+    } 
+    else {
+     
+     return COCKTAIL_PRICE;
+    }  
+   }
+   
+   // Author: Ruth. amazingknife.com
+   function updateMoney() {
+    
+    moneyTotal += getDrinkPrice();                    
+   }
+   // Author: Ruth. amazingknife.com
+   function updateMoneyDisplay() {
+    
+    dojo.byId("moneyCounter").innerHTML = "You have $" + moneyTotal + ".";         
+   }
+   
+   // Author: Ruth. amazingknife.com
+   function checkForEnoughIngredients(drink) {
+   
+    if ( drink == "beer" ) {
+      
+     if ( beerLeft <= 0 ) {
+       
+      showOutOfDrinkToast( beerLabel, BEER_PRICE );                  
+              
+      return -1;
+     }
+    }
+    else if ( drink == "wine" ) {
+     
+     if ( wineLeft <= 0 ) {
+      
+      showOutOfDrinkToast( wineLabel, WINE_PRICE );                  
+              
+      return -1;
+     }     
+    }
+    else if ( drink == "ginntonic" ) {
+     
+     if ( ginLeft <= 0 ) {
+       
+      showOutOfDrinkToast( ginLabel, COCKTAIL_PRICE );                  
+              
+      return -1;
+     }     
+    }
+    else if ( drink == "rumncoke" ) {
+ 
+     if ( rumLeft <= 0 ) {
+       
+      showOutOfDrinkToast( rumLabel, COCKTAIL_PRICE );            
+              
+      return -1;
+     }     
+    }
+    else if ( drink == "vodkatonic" ) {
+ 
+     if ( vodkaLeft <= 0 ) {
+ 
+         showOutOfDrinkToast(vodkaLabel, COCKTAIL_PRICE);            
+              
+      return -1;
+     }     
+    }    
+   }
+   
+   // Author: Ruth. amazingknife.com
+   function getDrinkLabel(drink) {
+   
+    var drinkLabel = "";
+    if (drink == "beer") {
+     
+     drinkLabel = "beer";      
+    }
+    else if (drink == "wine") {
+            
+     drinkLabel = "wine";      
+    }
+    else if (drink == "ginntonic") {
+              
+     drinkLabel = "Gin and Tonic";       
+    }
+    else if (drink == "rumncoke") { 
+                
+     drinkLabel = "Rum and Coke";        
+    }
+    else  if (drink == "vodkatonic") {
+                  
+     drinkLabel = "Vodka Tonic";            
+    } 
+    return drinkLabel;
+   }
+   
+    // Author: Ruth. amazingknife.com
+      // Check if the drink being made is what the customer ordered.
+   // Check if there is enough of the ingredient to make the drink.
+   function validateDrinkMaking() {
+    var drink = dojo.byId("drinks").value;
+        // Check if the user made the right drink
+       if ( drink != customerDrinkToMake ) {
+
+          // Make sure to use var inside functions to make the variable local
+     // Otherwise it is global.                 
+
+                // check if the user has enough booze
+     // if not just ding them for being out of the booze.     
+
+            // Check if the user has enough of the ingredient
+     var ret = checkForEnoughIngredients(drink);
+     if (ret == -1) {
+      return -1;
+     }
+
+          var wrongDrinkLabel = getDrinkLabel(drink);
+     var customerDrinkLabel = getDrinkLabel(customerDrinkToMake);
+
+                                    // bump down the bar popularity here
+     dijit.byId('toast').setContent( "You made the wrong drink. You were supposed to make " +
+        customerDrinkLabel + " but you made " + 
+       wrongDrinkLabel, "error" , 5000 );
+
+                    dijit.byId('toast').show();     
+     // This updates the drink total and bumps down the booze
+     drinkCount++;
+     updateCount();
+     updateBarPopularity( -2 );
+     return -1;               
+    }     
+
+                      // Check if the user has enough of the ingredient
+    ret = checkForEnoughIngredients(customerDrinkToMake);
+    if (ret == -1) {
+     return -1;
+    }          
+
+            return 1;                    
+   }
+
+      function setNewDrinkToMake() {
+
+            // Set a new drink to make.
+    randomNumber = Math.floor(Math.random()*5);     
+
+         // Since beer is usually ordered more. The frequency will be a little higher.
+    if ( randomNumber == 0 || randomNumber == 1 ) {
+     customerDrinkToMake = "beer";
+     dojo.byId("customerDrink").innerHTML = beerPhrase;     
+    }
+    else if ( randomNumber == 2 ) {
+     customerDrinkToMake = "wine";
+     dojo.byId("customerDrink").innerHTML = winePhrase;          
+    }
+    else if ( randomNumber == 3 ) {
+     customerDrinkToMake = "ginntonic";
+     dojo.byId("customerDrink").innerHTML = ginntonicPhrase;               
+    }
+    else if ( randomNumber == 4 ) {
+     customerDrinkToMake = "rumncoke";
+     dojo.byId("customerDrink").innerHTML = rumncokePhrase;     
+    }
+    else if ( randomNumber == 5 ) {
+     customerDrinkToMake = "vodkatonic";
+     dojo.byId("customerDrink").innerHTML = vodkatonicPhrase;     
+    }
+   }
+
+      // Here is where the extra fun of SimBar comes in.
+   // Watch out for randomly generated Boozilla and others.
+   // Author: Ruth. amazingknife.com
+   function checkForUnexpectedEvent()
+   {        
+    var randomNum1 = Math.floor(Math.random()*10);
+    var randomNum2 = Math.floor(Math.random()*10);
+
+        // You can only have one unexpected event happen per turn.    
+
+            if ( !boozillaHappened ) {
+
+          console.debug("boozillaHappened is false");
+     console.debug("randomNum1 = " + randomNum1 + " randomNum2 = " + randomNum2 + " moneyTotal = " + moneyTotal);
+     if ((randomNum1 == randomNum2) && (moneyTotal > 1)) {
+
+            // Boozilla
+      boozillaHappened = true;
+
+            dijit.byId('toast').setContent("Boozilla came in and jacked up the place!, you lose some money.", "error", 7000);
+      dijit.byId('toast').show();
+
+            moneyTotal = Math.floor(moneyTotal / 2); // lose half your money and truncate
+      dojo.byId("moneyCounter").style.backgroundColor = "red";
+
+            needGreenFairy = true;
+      updateMoneyDisplay();
+
+            updateBarPopularity( -2 );
+
+                  var tbButton = dijit.byId("tauntButton");
+      tbButton.attr("style", "display:inline");
+
+            dojo.byId("tauntButton").style.backgroundColor = "yellow";
+     }
+    }
+
+        // Need to recheck because boozilla could have happened in the above.
+    if ( !boozillaHappened ) {
+     if (needGreenFairy) {
+      // Green fairy (Booze fairy) - Green fairy is a nick name for Absinthe
+
+            // Get some new random numbers
+      randomNum1 = Math.floor(Math.random() * 10);
+      randomNum2 = Math.floor(Math.random() * 10);
+
+            if (randomNum1 == randomNum2) {
+
+             beerLeft = PINTS_PER_KEG;
+       dijit.byId("keg").update({
+        maximum: PINTS_PER_KEG,
+        progress: beerLeft
+       });
+
+              wineLeft = GLASSES_WINE_PER_BOTTLE;
+       dijit.byId("wineBottle").update({
+        maximum: GLASSES_WINE_PER_BOTTLE,
+        progress: wineLeft
+       });
+
+              rumLeft = SHOTS_PER_BOTTLE;
+       dijit.byId("rumBottle").update({
+        maximum: SHOTS_PER_BOTTLE,
+        progress: rumLeft
+       });
+
+              // update the amount of booze
+       ginLeft = SHOTS_PER_BOTTLE;
+       dijit.byId("ginBottle").update({
+        maximum: SHOTS_PER_BOTTLE,
+        progress: ginLeft
+       });
+
+              // update the amount of booze
+       vodkaLeft = SHOTS_PER_BOTTLE;
+       dijit.byId("vodkaBottle").update({
+        maximum: SHOTS_PER_BOTTLE,
+        progress: vodkaLeft
+       });
+
+              dijit.byId('toast').setContent("The green fairy came! Happy Booze Day!, Your booze is refilled.", "message", 7000);
+       dijit.byId('toast').show();
+
+              needGreenFairy = false;
+      }
+     }
+    }     
+   }
+
+      // Author: Ruth. amazingknife.com 
+   // This is the start of the users turn, it happens when a user
+   // makes a drink.  
+   function makeDrink() {
+
+        // Every turn check for if boozilla happened and deal with the count.
+    // The user gets a "Get out of Boozilla free card" for 5 turns after Boozilla
+    // swings by.
+    if ( boozillaHappened ) {
+
+          if (turnsSinceBoozilla > 4) {
+      console.debug("turning off boozillaHappened and turnSinceBoozilla");
+      boozillaHappened = false;
+      turnsSinceBoozilla = 0;
+     }
+     else if (turnsSinceBoozilla == 0) {
+      // turn off the taunt boozilla button
+      // the user only gets the chance to press the button one time.
+      dijit.byId("tauntButton").attr("style", "display:none");
+      dojo.byId("tauntButton").style.backgroundColor = "";
+      turnsSinceBoozilla++;
+     }
+     else {
+      turnsSinceBoozilla++;
+     }
+    }
+
+        dojo.byId("shopButton").style.backgroundColor = "";
+    dojo.byId("moneyCounter").style.backgroundColor = "black";
+
+        retValue = validateDrinkMaking();    
+
+        // If everything is OK with the validation, keep going
+    if (retValue == 1) {
+
+         drinkCount++;
+
+          updateMoney();
+     updateCount();     
+     updateBarPopularity( 1 );                   
+    }    
+
+        updateMoneyDisplay();
+
+        // is Boozilla or another unexpected event coming?
+    checkForUnexpectedEvent();    
+
+        // Set new drink even if the wrong drink was made or some other error.
+    setNewDrinkToMake();
+   }
+
+     // Author: Ruth. amazingknife.com  
+      function shop() {
+
+     dijit.byId("shoppingDlg").show();     
+      }
+
+      // Author: Ruth. amazingknife.com
+   // rename this to outOfAlcoholAction 
+   function showOutOfDrinkToast( drink, price ) {
+
+        // don't make the user lose money, but bump down the bar popularity value
+    dijit.byId("toast").setContent( "Out of " + drink + "! Buy more, your popularity has decreased.", "error" , 10000 );      
+       dijit.byId("toast").show();            
+
+        dojo.byId("shopButton").style.backgroundColor = "red";
+
+                   needGreenFairy = true;
+
+        updateBarPopularity( -2 );  
+   }
+
+      // Author: Ruth. amazingknife.com
+   function showNotEnoughMoneyToast( label ) {
+
+        dijit.byId('toast').setContent( "Not enough money, no " + label + " for you! \nSorry sucker, you're going to have to make some drinks and/or wait for the green fairy", "error" , 10000 );      
+    dijit.byId('toast').show();
+
+        needGreenFairy = true;
+   }
+
+      // Author: Ruth. amazingknife.com
+   function buySupplies() {
+
+            var supplyValue = "";    
+
+        for ( var i = 0; i < document.supplyOrder.supplies.length; i++ ) {
+
+                if ( document.supplyOrder.supplies[i].checked ) {
+
+                              supplyValue = document.supplyOrder.supplies[i].value;                                    
+
+            if ( supplyValue == "beer" ) {
+
+             // check if there is enough money
+       if (moneyTotal >= KEG_PRICE) {
+
+               // subtract the money
+        moneyTotal -= KEG_PRICE;
+        updateMoneyDisplay();
+
+                // update the amount of booze
+        beerLeft = PINTS_PER_KEG;
+        dijit.byId("keg").update({
+         maximum: PINTS_PER_KEG,
+         progress: beerLeft
+        });
+       }
+       else {
+        showNotEnoughMoneyToast("beer");                
+       }
+      }
+      else if ( supplyValue == "wine" ) {
+
+                     if (moneyTotal >= WINE_BOTTLE_PRICE) {
+
+               moneyTotal -= WINE_BOTTLE_PRICE;
+        updateMoneyDisplay();
+
+                wineLeft = GLASSES_WINE_PER_BOTTLE;
+        dijit.byId("wineBottle").update({
+         maximum: GLASSES_WINE_PER_BOTTLE,
+         progress: wineLeft
+        });
+       }
+       else {       
+        showNotEnoughMoneyToast("wine");        
+       }
+      }
+      else if ( supplyValue == "rum" ) {
+
+              if (moneyTotal >= RUM_BOTTLE_PRICE) {
+
+               moneyTotal -= RUM_BOTTLE_PRICE;
+        updateMoneyDisplay();
+
+                // update the amount of booze
+        rumLeft = SHOTS_PER_BOTTLE;
+        dijit.byId("rumBottle").update({
+         maximum: SHOTS_PER_BOTTLE,
+         progress: rumLeft
+        });
+       }
+       else {       
+        showNotEnoughMoneyToast("rum");                       
+       }
+      }
+      else if ( supplyValue == "gin" ) {
+
+              if (moneyTotal >= GIN_BOTTLE_PRICE) {
+
+               moneyTotal -= GIN_BOTTLE_PRICE;
+        updateMoneyDisplay();
+
+                // update the amount of booze
+        ginLeft = SHOTS_PER_BOTTLE;
+        dijit.byId("ginBottle").update({
+         maximum: SHOTS_PER_BOTTLE,
+         progress: ginLeft
+        });
+       }
+       else {
+
+               showNotEnoughMoneyToast("gin");        
+       }
+      }
+      else if ( supplyValue == "vodka" ) {
+
+              if (moneyTotal >= VODKA_BOTTLE_PRICE) {
+
+               moneyTotal -= VODKA_BOTTLE_PRICE;
+        updateMoneyDisplay();
+
+                // update the amount of booze
+        vodkaLeft = SHOTS_PER_BOTTLE;
+        dijit.byId("vodkaBottle").update({
+         maximum: SHOTS_PER_BOTTLE,
+         progress: vodkaLeft
+        });
+       }
+       else {
+        showNotEnoughMoneyToast("vodka");        
+       }
+      }                  
+        }
+    }                 
+
+        dijit.byId("shoppingDlg").hide();
+   }
+
+     </script>    
+    
+    </head>
+    
+ <!-- Author: Ruth. amazingknife.com -->
+ <!--
+   TODO
+   Wish List:
+  when the user presses the 7 key, make sure that boozilla happened before doing the taunt
+
+                  less money taken after taunts
+  Add option to pay for Boozilla beat down. Boozilla can get arrested.
+
+       Random tips
+  Random people who don't pay their tab
+
+      Stash money
+
+    add a timer for how long you have to make a customer's drink
+
+    Add a bordercontainer and contentpanes. put the making part on the left, the progress bars on the right
+    and the counters on the top, and a nice little footer on the bottom
+  Add tabs. One tab will be the game and another tab will be the configuration page
+
+               customers waiting too long leave
+
+    Questions? or things to do to get out of a bad situation
+
+  //      Need to check for both, making the wrong drink and being out of booze.  
+//     increase beer frequency  
+//     Set the table cells to a set width and height  
+//  put the shopping items in the same order as the progress bars.  
+//      boozilla seems to be gone, boozilla is fixed  
+//  when does the green fairy come? i think the green fairy is ok now  
+//  Need to make the taunt boozilla button a color  
+//  limits on popularity, 0 -100  
+//  Move drink box near message pop ups
+//  Add ability to taunt Boozilla,  
+//  if you make wrong drink you just lose the booze and not money, 
+//  but the bar popularity goes down   
+//  Have a "bar popularity" value that will go down when you make the wrong drink
+//  the bar popularity will go up when you make drinks
+//  bar popularity will go down when boozilla comes in
+//  if you don't taunt boozilla when the button comes, then it goes away if you take another turn.      
+//  if you run out of a bottle of alcohol the shop button will turn red for a turn.
+//      added key press option for the shop button      
+ -->
+    <body class="tundra">       
+
+   <table cellspacing="10">
+   <tr>
+    <td>
+        <h1 id="gameTitle">Drink Making Game</h1>
+    </td>
+    <td>
+     <h5 id="websiteLabel">www.amazingknife.com</h5>
+    </td>
+   </tr>
+  </table>   
+
+    <table cellspacing="10" border="0">
+   <tr>
+    <td valign="bottom" align="center" class="regularCell">
+     <div>
+         <button id="shopButton" dojoType="dijit.form.Button" onclick="shop();">Go Shopping (Key = 6)</button>
+     </div>
+    </td>
+    <td class="smallCell">
+     &nbsp
+    </td>
+    <td class="bigCell">
+     <button id="tauntButton">&nbsp</button>
+    </td>   
+    <td class="regularCell">
+     <span style="font-weight: bold" id="chooseDrink">Choose a drink to make</span>
+    </td>    
+    </tr>
+    <tr>
+    <td valign="bottom" class="regularCell">
+        <div id="drinkCounter" class="counter">You have made 0 drinks.</div>
+    </td>
+    <td valign="bottom" class="smallCell">
+        <div id="moneyCounter" class="counter">You have $0.</div>
+    </td>
+    <td valign="bottom" class="bigCell">
+        <div id="customerDrink" class="counter"></div>
+    </td>                    
+     <td>
+     <!-- Author: Ruth. www.amazingknife.com -->
+     <select id="drinks" name="drinks" size="5" onclick="makeDrink();">
+         <option value="beer">Beer (Key = 1)</option>
+         <option value="wine">Wine (Key = 2)</option>
+      <option value="ginntonic">Gin and Tonic (Key = 3)</option>
+        <option value="rumncoke">Rum and Coke (Key = 4)</option>
+        <option value="vodkatonic">Vodka Tonic (Key = 5)</option>   
+     </select>
+    </td>
+   </tr>
+   <tr>
+    <td class="regularCell">&nbsp;</td>
+
+       <td id="popularityIntegerDisplay" class="smallCell">Bar popularity = 40</td>
+
+       <td id="popularityDisplay" class="bigCell">Your bar is new.<br />Play! People will form opinions.</td>
+   </tr>
+  </table> 
+
+      <br /><br />
+  <!-- Author: Ruth. amazingknife.com -->     
+  <h1 id="beerProgressLabel">Beer:</h1>
+  <div id="keg"></div> 
+  <h1 id="wineProgressLabel">Wine:</h1>
+  <div id="wineBottle"></div> 
+  <h1 id="ginProgressLabel">Gin:</h1>
+  <div id="ginBottle"></div>
+
+     <h1 id="rumProgressLabel">Rum:</h1>
+  <div id="rumBottle"></div>
+
+     <h1 id="vodkaProgressLabel">Vodka:</h1>
+  <div id="vodkaBottle"></div>   
+
+           <br /><br />              
+
+    <div dojoType="dijit.Tooltip" connectID="chooseDrink">
+   Click a drink in the list to make it or push the key it is assigned to.
+  <div> 
+
+      <!-- Author: Ruth. amazingknife.com -->     
+  <div id="shoppingDlg" dojoType="dijit.Dialog" title="Shop">
+
+       <form name="supplyOrder">
+    <input type="checkbox" dojoType="dijit.form.CheckBox" name="supplies" id="cb5" value="beer">
+    <label for="cb5">$150 Keg of Beer</label>
+    <br />
+    <input type="checkbox" dojoType="dijit.form.CheckBox" name="supplies" id="cb4" value="wine">
+    <label for="cb4">$20 Bottle of Wine</label>
+    <br />
+    <input type="checkbox" dojoType="dijit.form.CheckBox" name="supplies" id="cb1" value="gin">
+    <label for="cb1">$25 Bottle of Gin</label>
+    <br />
+    <input type="checkbox" dojoType="dijit.form.CheckBox" name="supplies" id="cb2" value="rum">
+    <label for="cb2">$25 Bottle of Rum</label>
+    <br />   
+    <input type="checkbox" dojoType="dijit.form.CheckBox" name="supplies" id="cb3" value="vodka">
+    <label for="cb3">$25 Bottle of Vodka</label>
+    <br />              
+    <button dojoType="dijit.form.Button" onclick="buySupplies();">Buy</button>  
+   </form>
+  </div>
+
+      <div dojoType="dojox.widget.Toaster" id="toast" positionDirection="tr-left" duration="0" 
+           style="display:hide"></div>
+    </body>
+</html> 
+

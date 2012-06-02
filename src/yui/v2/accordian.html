@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>Accordian</title>
+<script src="http://yui.yahooapis.com/2.9.0/build/yahoo/yahoo-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/dom/dom-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/event/event-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/animation/animation-min.js"></script>
+<style>
+.pane div{height:0;overflow:hidden}
+</style>
+</head>
+<body>
+<ol id="accordion">
+<li class="pane">
+<h1>Panel 1</h1>
+<div>
+Pane one content
+</div>
+</li>
+<li id="pane-2" class="pane">
+<h1>Panel 2</h1>
+<div>
+Pane two content
+</div>
+</li>
+</ol>
+<script>
+var Accordion = function() {
+var container	 = null;
+var targetHeight	= null;
+var panes	 = null;
+/**
+ * The first parameter is the event, the second is the object passed through the handler
+ */
+function _handleClick(e, pane){
+	if (YAHOO.util.Dom.hasClass(pane, 'open')){
+		/*
+		 * Pane is open, now close
+		 */
+		_close(pane);
+	}else{
+		/*
+		 * Pane is closed, now open
+		 * Don't forget to close all others
+		 */
+		_open(pane);
+	}
+}
+ 
+/**
+ * I like it if only one pane is open at any givven time
+ * So loop all panes and close them
+ */
+function _closeAll(){
+	for(var x = 0; x < panes.length; x++){
+		_close(panes[x]);
+	}
+}
+
+function _open(pane){
+	if (!YAHOO.util.Dom.hasClass(pane, 'open')){
+		_closeAll();
+		/*
+		 * Accordion pane is appearantly closed so open it.
+		 */
+		var content	= YAHOO.util.Dom.getLastChild(pane);
+		/*
+		 * Setup the animation
+		 */
+		var attributes = {
+			height: { to: targetHeight } 
+		}; 
+		var anim = new YAHOO.util.Anim(content, attributes, 0.5, YAHOO.util.Easing.easeOutStrong);
+		anim.animate();
+		/*
+		 * Do some housekeeping
+		 */
+		YAHOO.util.Dom.setStyle(content, 'overflow', 'auto');
+		YAHOO.util.Dom.addClass(pane, 'open');
+	}
+}
+
+function _close(pane){
+	if (YAHOO.util.Dom.hasClass(pane, 'open')){
+		/*
+		 * Accordion pane is appearantly closed so open it.
+		 */
+		var content	= YAHOO.util.Dom.getLastChild(pane);
+		var attributes = { 
+			height: { to: 0 } 
+		}; 
+		var anim = new YAHOO.util.Anim(content, attributes, 0.5, YAHOO.util.Easing.easeOutStrong);
+		anim.animate();
+		YAHOO.util.Dom.setStyle(content, 'overflow', 'hidden');
+		YAHOO.util.Dom.removeClass(pane, 'open');
+	}
+}
+
+var pub = {
+	init : function(nodeId){
+		container	= document.getElementById(nodeId);
+		YAHOO.util.Dom.setStyle(container, 'height', '100%');
+		var containerDimensions = YAHOO.util.Dom.getRegion(container);
+		targetHeight	= (containerDimensions.bottom - containerDimensions.top);
+		if (container){
+			panes	 = YAHOO.util.Dom.getElementsByClassName('pane',null, container);
+			paneHeight	= YAHOO.util.Dom.getStyle(YAHOO.util.Dom.getFirstChild(panes[0]), 'height');
+			paneHeightPx	= paneHeight.substring(0, (paneHeight.length - 2));
+			targetHeight = (targetHeight - panes.length * (paneHeightPx));
+			for (var x=0; x<panes.length; x++){
+				var head	= YAHOO.util.Dom.getFirstChild(panes[x]);
+				/*
+				 * Add click handlers
+				 */
+				YAHOO.util.Event.addListener(head, "click", _handleClick, panes[x]);
+				var content	= YAHOO.util.Dom.getLastChild(panes[x]);
+				YAHOO.util.Dom.setStyle(content, 'height', '0px');
+			}
+		}else{
+			alert('container not found');
+		}
+	},
+	/**
+	 * Determine what pane is requested and open it
+	 */
+	open : function(pane){
+		if (YAHOO.lang.isString(pane)){
+			pane = document.getElementById(pane);
+		}else if (YAHOO.lang.isInt(pane)){
+			pane = panes[pane];
+		}
+		_open(pane);
+	},
+	/**
+	 * Determine what pane is requested and close it
+	 */
+	close : function(pane){
+		if (YAHOO.lang.isString(pane)){
+			pane = document.getElementById(pane);
+		}else if (YAHOO.lang.isInt(pane)){
+			pane = panes[pane];
+		}
+		_close(pane);
+	}
+}
+return pub;
+}();
+
+myAccordion = Accordion;
+myAccordion.init('accordion');
+</script>
+</body>
+</html>

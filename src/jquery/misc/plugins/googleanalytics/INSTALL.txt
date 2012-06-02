@@ -1,0 +1,1 @@
+To "install" this library, simply add the jquery.js and jquery.googleAnalytics.js files to your html.

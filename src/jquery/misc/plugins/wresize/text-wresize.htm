@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="overflow:hidden;">
+ <head>
+  <title> test window resize </title>
+
+<script type="text/javascript" src="http://jquery.com/src/jquery-latest.pack.js"></script>
+<script type="text/javascript" src="wresize.js"></script>
+
+
+<script type="text/javascript">
+jQuery( function( $ ) 
+{
+	function content_resize() 
+	{
+		var w = $( window );
+		var H = w.height();
+		var W = w.width();
+		$( '#content' ).css( {width: W-20, height: H-20} );
+	}
+
+	$( window ).wresize( content_resize );
+
+	content_resize();
+} );
+</script>
+
+ </head>
+
+ <body>
+ 
+<div id="content" style="border: 1px dashed silver; position:absolute; overflow:auto;">
+test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test 
+</div>
+
+ </body>
+</html>

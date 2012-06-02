@@ -1,0 +1,1 @@
+(function(a,b){for(b in a)document.writeln('<scri'+'pt src="'+a[b]+'" type="text/javascript"></sc'+'ript>')})(['http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js','/js/jquery-ishovered.js']);

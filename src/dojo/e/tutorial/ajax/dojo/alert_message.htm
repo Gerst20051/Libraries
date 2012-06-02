@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Alert Message</title>
+		<link rel="stylesheet" href="style.css" media="screen">
+		<link rel="stylesheet" href="../../demo.css" media="screen">
+		<!-- load dojo and provide config via data attribute -->
+		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js" data-dojo-config="isDebug: true,parseOnLoad: true">
+		</script>
+		<script>
+			// The "xhrGet" method executing an HTTP GET
+			dojo.xhrGet({
+			    // The URL to request
+			    url: "get-content.php",
+			    // The method that handles the request's successful result
+			    // Handle the response any way you'd like!
+			    load: function(result) {
+				alert("The message is: " + result);
+			    }
+			});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

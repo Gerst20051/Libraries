@@ -1,0 +1,51 @@
+========
+FEATURES
+========
+
+The JavaScript Browser Sniffer is able to identify these browsers:
+
+    * Microsoft Internet Explorer (should work with any version)
+    * Netscape 4.x, 6.x and 7.x
+    * Mozilla Seamonkey, Galeon, Firebird, Phoenix, Epiphany, K-Meleon, Camino and Chimera (should work with any version)
+    * Opera (should work with any version)
+    * Konqueror (should work with any version)
+    * Nautilus (version number is not available yet)
+    * Safari (should work with any version)
+    * Omniweb (should work with any version))
+    * Links (should work with any version)
+    * ELinks (should work with any version)
+    * PowerMarks (should work with any version)
+    * Crazy Browser (should work with any version)
+    * MyIE2 (should work with any version)
+    * Java (should work with any version)
+    * iCab (should work with any version)
+    * NetFront (should work with any version)
+    * Avant Browser (should work with any version)
+    * MSN Explorer (should work with any version)
+    * w3m (should work with any version) (please note that w3m only supports JavaScript at client-side if using w3m-js)
+    * Netcaptor (should work with any version)
+    * Dillo (should work with any version) (only server-side)
+    * Lynx (should work with any version) (only server-side)
+    * Playstation 3 (should work with any version)
+
+And these bots (only server-side, of course, because bots do not execute JavaScript):
+
+    * wget (should work with any version)
+    * GoogleBot
+    * GoogleBot Images
+    * MSNBot
+    * TurnitinBot
+    * Zyborg
+
+It will also tell you which operating system you run, which browser engine are you using (gecko, khtml...), the full user agent string and which version of the Flash plug-in you have (in case you do have).
+
+Since version 0.5, it works at client-side (no need to pass parameters, fully compatible with previous versions) or at server-side (you must pass the variable that contains the user agent string).
+
+Since version 0.5.3, it detects popup blockers and Javascript version.
+
+My current list of priorities:
+
+   1. Detect Adobe SVG plug-in
+   2. Identify Linux distribution
+
+If you want me to add anything, just ask (paugq AT users DOT sourceforge DOT net)

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Dojo Contacts</title>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/claro/claro.css">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.5/dojox/grid/resources/Grid.css">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.5/dojox/grid/resources/claroGrid.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body class="claro">
+		<div dojoType="dijit.layout.BorderContainer" design="header" gutters="false" liveSplitters="true" id="borderContainer">
+			<div dojoType="dijit.layout.ContentPane" region="top" id="topBar">
+				<h1>Dojo Contacts</h1>
+				<div dojoType="dijit.MenuBar" id="navMenu">
+					<div dojoType="dijit.PopupMenuBarItem">
+						<span>File</span>
+						<div dojoType="dijit.Menu" id="fileMenu">
+							<div dojoType="dijit.MenuItem" jsId="mnuNewContact">New Contact</div>
+							<div dojoType="dijit.MenuItem" jsId="mnuNewGroup">New Group</div>
+						</div>
+					</div>
+					<div dojoType="dijit.PopupMenuBarItem">
+						<span>Edit</span>
+						<div dojoType="dijit.Menu" id="editMenu">
+							<div dojoType="dijit.MenuItem" jsId="mnuEditContact" disabled="true">Edit Contact</div>
+							<div dojoType="dijit.MenuItem" jsId="mnuMoveContact" disabled="true">Move Contact</div>
+							<div dojoType="dijit.MenuItem" jsId="mnuRenameGroup" disabled="true">Rename Group</div>
+
+							<div dojoType="dijit.MenuSeparator"></div>
+							<div dojoType="dijit.MenuItem" jsId="mnuDeleteContact" disabled="true">Delete Contact</div>
+							<div dojoType="dijit.MenuItem" jsId="mnuDeleteGroup" disabled="true">Delete Group</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div dojoType="dijit.layout.BorderContainer" region="center" gutters="true" liveSplitters="true" id="mainSection">
+				<div dojoType="dijit.layout.ContentPane" splitter="true" region="left" id="treeSection">
+					<div dojoType="dojo.data.ItemFileWriteStore" jsId="groupsStore" url="data/groups.php"></div>
+					<div dojoType="dijit.tree.TreeStoreModel" jsId="groupsModel" childrenAttrs="groups" store="groupsStore" query="{id:0}"></div>
+					<div dojoType="dijit.Tree" id="groupsTree" jsId="groupsTree" model="groupsModel">
+						<div dojoType="dijit.Menu" targetNodeIds="groupsTree">
+							<div dojoType="dijit.MenuItem" jsId="ctxMnuRenameGroup" disabled="true">Rename Group</div>
+							<div dojoType="dijit.MenuItem" jsId="ctxMnuDeleteGroup" disabled="true">Delete Group</div>
+						</div>
+					</div>
+				</div>
+				<div dojoType="dijit.layout.BorderContainer" design="header" gutters="true" liveSplitters="true" id="mainContainer" region="center">
+					<div dojoType="dijit.layout.ContentPane" region="top" splitter="true" id="gridSection">
+						<span dojoType="dojo.data.ItemFileReadStore" jsId="contactsStore" url="data/contacts.php"></span>
+						<table dojoType="dojox.grid.DataGrid" id="contactsGrid" jsId="contactsGrid" columnReordering="true" sortFields="['last_name','first_name']" store="contactsStore" query="{first_name: '*'}"
+						clientSort="true" selectionMode="single" rowHeight="25" noDataMessage="<span class='dojoxGridNoData'>No contacts found in this group</span>">
+							<thead>
+								<tr>
+									<th field="last_name" width="200px">Last Name</th>
+									<th field="first_name" width="200px">First Name</th>
+									<th field="email_address" width="100%">E-mail Address</th>
+								</tr>
+							</thead>
+
+							<script type="dojo/method" event="onRowContextMenu" args="e">
+							</script>
+						</table>
+						<div dojoType="dijit.Menu" id="gridMenu" targetNodeIds="contactsGrid">
+							<div dojoType="dijit.MenuItem" jsId="ctxMnuEditContact" disabled="true">Edit Contact</div>
+							<div dojoType="dijit.MenuItem" jsId="ctxMnuMoveContact" disabled="true">Move Contact</div>
+							<div dojoType="dijit.MenuItem" jsId="ctxMnuDeleteContact" disabled="true">Delete Contact</div>
+						</div>
+					</div>
+					<div dojoType="dijit.layout.ContentPane" id="contactView" jsId="contactView" region="center">
+						<em>Select a contact to view above.</em>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="newGroupDialog" jsId="newGroupDialog" dojoType="dijit.Dialog" title="Create New Group" draggable="false">
+			<div dojoType="dijit.form.Form" id="newGroupForm" jsId="newGroupForm" action="data/new_group.php" method="post">
+				<input type="hidden" name="new_group_ajax" id="new_group_ajax" value="0">
+				<label for="new_group_name">Group Name:</label>
+				<input type="text" name="new_group_name" id="new_group_name" required="true" dojoType="dijit.form.ValidationTextBox" />
+				<button dojoType="dijit.form.Button" type="submit">Submit</button>
+				<button dojoType="dijit.form.Button" jsId="newGroupCancel" type="button">Cancel</button>
+			</div>
+		</div>
+
+		<div id="editGroupDialog" jsId="editGroupDialog" dojoType="dijit.Dialog" title="Rename Group" draggable="false">
+			<div dojoType="dijit.form.Form" id="editGroupForm" jsId="editGroupForm" action="data/edit_group.php" method="post">
+				<input type="hidden" name="edit_group_ajax" id="edit_group_ajax" value="0">
+				<input type="hidden" name="edit_group_id" id="edit_group_id">
+				<table cellspacing="4" cellpadding="4">
+					<tr>
+						<td><label for="edit_group_old">Old Group Name:</label></td>
+						<td><input type="text" name="edit_group_old" id="edit_group_old" disabled="true" dojoType="dijit.form.TextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_group_name">New Group Name:</label></td>
+						<td><input type="text" name="edit_group_name" id="edit_group_name" required="true" dojoType="dijit.form.ValidationTextBox" style="margin-bottom: 6px" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button dojoType="dijit.form.Button" type="submit">Submit</button>
+							<button dojoType="dijit.form.Button" jsId="editGroupCancel" type="button">Cancel</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div id="moveContactDialog" jsId="moveContactDialog" dojoType="dijit.Dialog" title="Move Contact" draggable="false">
+			<div dojoType="dijit.form.Form" id="moveContactForm" jsId="moveContactForm" action="data/move_contact.php" method="post">
+				<input type="hidden" name="move_contact_ajax" id="move_contact_ajax" value="0">
+				<input type="hidden" name="move_contact_id" id="move_contact_id">
+				<table cellspacing="4" cellpadding="4">
+					<tr>
+						<td><label for="move_contact_name">Contact Name:</label></td>
+						<td><input type="text" name="move_contact_name" id="move_contact_name" disabled="true" dojoType="dijit.form.TextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="move_contact_old">Current Group:</label></td>
+						<td><input type="text" name="move_contact_old" id="move_contact_old" disabled="true" dojoType="dijit.form.TextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="move_contact_new">New Group:</label></td>
+						<td><input dojoType="dijit.form.FilteringSelect" name="move_contact_new" store="groupsStore" searchAttr="name" query="{type:'node'}" id="move_contact_new" required="true" style="margin-bottom: 6px" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button dojoType="dijit.form.Button" type="submit">Submit</button>
+							<button dojoType="dijit.form.Button" jsId="moveContactCancel" type="button">Cancel</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div id="editContactDialog" jsId="editContactDialog" dojoType="dijit.Dialog" title="Edit Contact" draggable="false">
+			<div dojoType="dijit.form.Form" id="editContactForm" jsId="editContactForm" action="data/edit_contact.php" method="post">
+				<input type="hidden" name="edit_contact_ajax" id="edit_contact_ajax" value="0">
+				<input type="hidden" name="edit_contact_real_id" id="edit_contact_real_id">
+				<table cellspacing="4" cellpadding="4">
+					<tr>
+						<td><label for="edit_contact_id">Contact ID:</label></td>
+						<td><input type="text" name="edit_contact_id" id="edit_contact_id" disabled="true" dojoType="dijit.form.TextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="move_contact_new">Group:</label></td>
+						<td><input dojoType="dijit.form.FilteringSelect" name="edit_contact_group" store="groupsStore" searchAttr="name" query="{type:'node'}" id="edit_contact_group" required="true" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_first_name">First Name:</label></td>
+						<td><input type="text" name="edit_contact_first_name" id="edit_contact_first_name" required="true" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_last_name">Last Name:</label></td>
+						<td><input type="text" name="edit_contact_last_name" id="edit_contact_last_name" required="true" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_email_address">Email Address:</label></td>
+						<td><input type="text" name="edit_contact_email_address" id="edit_contact_email_address" required="true" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_home_phone">Home Phone:</label></td>
+						<td><input type="text" name="edit_contact_home_phone" id="edit_contact_home_phone" required="false" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_work_phone">Work Phone:</label></td>
+						<td><input type="text" name="edit_contact_work_phone" id="edit_contact_work_phone" required="false" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_twitter">Twitter:</label></td>
+						<td><input type="text" name="edit_contact_twitter" id="edit_contact_twitter" required="false" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_facebook">Facebook:</label></td>
+						<td><input type="text" name="edit_contact_facebook" id="edit_contact_facebook" required="false" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td><label for="edit_contact_linkedin">LinkedIn:</label></td>
+						<td><input type="text" name="edit_contact_linkedin" id="edit_contact_linkedin" required="false" dojoType="dijit.form.ValidationTextBox" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button dojoType="dijit.form.Button" type="submit">Submit</button>
+							<button dojoType="dijit.form.Button" jsId="editContactCancel" type="button">Cancel</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div id="okDialog" jsId="okDialog" dojoType="dijit.Dialog" title="Title" draggable="false">
+			<p id="okDialogMessage" style="margin-top: 5px">Message</p>
+			<div align="center">
+				<button dojoType="dijit.form.Button" jsId="okDialogOK" type="button">OK</button>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+	</body>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="860"
+   name=""
+   committed-date="2007-01-02T19:05:00.426610Z"
+   url="svn://jquery.com/tags/1.1/build/docs/style"
+   last-author="joern"
+   kind="dir"
+   uuid="71c7bbeb-8c0f-0410-8431-c31947b64af3"
+   repos="svn://jquery.com"
+   revision="1075"/>
+<entry
+   committed-rev="860"
+   name="style.css"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-02T19:05:00.426610Z"
+   checksum="839dd8ce8b7b65216c766602842b0cd6"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="262"
+   name="cat.xsl"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2006-09-01T07:41:59.471125Z"
+   checksum="1cb4b348c35fc6ac2ca756d0785db1e6"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="860"
+   name="docs.xsl"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-02T19:05:00.426610Z"
+   checksum="d553ae48b6ed47a794c8c9af727cb6a4"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="262"
+   name="cat.css"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2006-09-01T07:41:59.471125Z"
+   checksum="9e70fc3944e395bad862af0a5e81db03"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+</wc-entries>

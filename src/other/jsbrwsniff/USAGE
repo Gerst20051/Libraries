@@ -1,0 +1,224 @@
+=====
+USAGE
+=====
+
+The package you download contains two examples: one for client-side usage (demo.html) and one for server-side usage in ASP (demo.asp).
+
+Requirements
+------------
+
+The Javascript Browser Sniffer makes an extensive use of regular expressions and the search() and match() functions.
+
+You will need Javascript 1.2 or greater for jsbrwsniff to work. Some examples:
+
+    * For client-side usage: Microsoft Internet Explorer 4.0, Netscape 4.0, any Mozilla Gecko-based browser, Konqueror (any version), Safari (any version) and more.
+    * For server-side usage: Microsoft IIS 4.0, Netscape Enterprise Server 3.0
+
+Client-side usage
+-----------------
+
+JsBrwSniff is easy to use. You only have to load the brwsniff.js file:
+
+<script type="text/javascript" src="js/brwsniff.js"></script>
+
+Then you can use it this way:
+<script type="text/javascript">
+  var br=new Array(4);
+  var os=new Array(2);
+  var flash=new Array(2);
+  br=getBrowser();
+  os=getOS();
+  flash=hasFlashPlugin();
+  popups = popupsAllowed();
+  jsver = jsVersion();
+  document.write("Browser identifier: "+br[0]+"<br />");
+  document.write("Browser version: "+br[1]+"<br />");
+  document.write("Browser major version: "+getMajorVersion(br[1])+"<br />");
+  document.write("Browser minor version: "+getMinorVersion(br[1])+"<br />");
+  document.write("Browser engine: "+br[2]+"<br />");
+  document.write("Browser engine version: "+br[3]+"<br />");
+  document.write("Full user agent string: "+getFullUAString()+"<br />");
+  document.write("Operating system identifier: "+os[0]+"<br />");
+  document.write("Operating system version: "+os[1]+"<br />");
+  document.write("Is Flash installed? " + (flash[0]==2 ? "Yes" : (flash[0] == 1 ? "No" : "unknown")) + "<br />");
+document.write("Flash version: "+flash[1] + "<br />");
+document.write("Are popups allowed for this site? " + (popups ? 'Yes' : 'No') + "<br />" );
+document.write("What is the newest version of Javascript this browser supports? " + jsver + "<br />");
+</script>
+
+For client-side usage, you do not need to feed getBrowser(), getOS() and getFullUAString() with any parameter.
+
+Server-side usage
+-----------------
+
+Since version 0.5, JsBrwSniff can also be used at server-side. You only have to feed it with the variable that contains the user agent string. The following one is an example in ASP.
+
+This goes in the <head> section of the document:
+<script language="javascript" runat="server" src="brwsniff.js">
+<script language="javascript" runat="server">
+  function showBrwInfo() {
+    var br=new Array(4);
+    var os=new Array(2);
+    var nav;
+    nav='' + Request.ServerVariables("HTTP_USER_AGENT");
+    nav=nav.toLowerCase();
+    os=getOS(nav);
+    br=getBrowser(nav);
+    Response.write("Browser identifier: " + br[0] + "<br />");
+    Response.write("Browser version: "+br[1]+"<br />");
+    Response.write("Browser major version: "+getMajorVersion(br[1])+"<br />");
+    Response.write("Browser minor version: "+getMinorVersion(br[1])+"<br />");
+    Response.write("Browser engine: "+br[2]+"<br />");
+    Response.write("Browser engine version: "+br[3]+"<br />");
+    Response.write("Full user agent string: "+getFullUAString(nav)+"<br />");
+    Response.write("Operating system identifier: " + os[0] +"<br />");
+    Response.write("Operating system version: "+ os[1]);
+  }
+</script>
+
+Now you can add this to the <body> of the document:
+<%call showBrwInfo() %>
+
+For server-side usage, you DO need to feed getBrowser(), getOS() and getFullUAString() with the user-string parameter.
+
+Please note that you can only perform Flash plug-in detection at client-side. It will NOT work at server-side.
+
+Although you can use the getFullUAString(nav) function at server-side, it's useless: it will return nav.
+
+Browser identifiers
+-------------------
+
+    * msie Microsoft Internet Explorer
+    * crazy Crazy Browser
+    * mozsea Mozilla (Seamonkey)
+    * opera Opera
+    * netscape Netscape 4.x, 6.x and 7.x (Changed: in versions earlier than 0.4.0, it was "netscape4" for Netscape 4.x)
+    * galeon Galeon
+    * nautilus Nautilus
+    * firefox Firefox
+    * firebird Firebird
+    * phoenix Phoenix
+    * konqueror Konqueror
+    * omniweb Omniweb
+    * epiphany Epiphany
+    * chimera Chimera
+    * camino Camino
+    * kmeleon K-Meleon
+    * links Links
+    * elinks ELinks
+    * w3m w3m
+    * powermarks PowerMarks
+    * java Java (Java Runtime Environment or Java Development Kit)
+    * icab iCab
+    * netfront NetFront
+    * myie2 MyIE2
+    * avantbrowser Avant Browser
+    * msn MSN Explorer
+    * netcaptor NetCaptor
+    * playstation3 Sony-branded NetFront for Playstation 3
+    * dillo Dillo (server-side detection only)
+    * lynx Lynx (server-side detection only)
+    * unknown Unknown browser (Changed: in versions before 0.4.0 it returned "other")
+
+Since version 0.3.5, JsBrwSniff returns an array of four strings:
+
+    * a short browser id
+    * the version number (or "unknown" if unknown)
+    * the engine the browser is using (or "unknown" if unknown)
+    * the engine version (or "unknown" if unknown)
+
+Operating system identifers
+---------------------------
+
+    * win Windows. Version identifiers: 95, 98, me, nt4, 2000, xp, longhorn
+    * wince Windows CE. Version identifier: (release version, i. e. 0.9.3)
+    * linux Linux. Version identifier: (kernel version, i.e. 2.4.22)
+    * macclassic Mac OS < 10.0.0
+    * macosx Mac OS 10.0.0+
+    * os2 OS/2
+    * freebsd FreeBSD. Version identifier: (release version, i.e. 4.8)
+    * openbsd OpenBSD. Version identifier: (release version, i.e. 1.5)
+    * sunos SunOS/Solaris
+    * unix Unknown Unix
+    * openvms OpenVMS
+    * amigaos AmigaOS
+    * hurd GNU/Hurd
+    * cygwin Cygwin (Linux software compiled for Windows)
+    * palmos PalmOS
+    * symbian Symbian OS
+    * irix Irix
+    * hpux HP-UX
+    * java Java (Java Runtime Environment or Java Development Kit)
+    * unknown Unknown operating system (Changed: in versions before 0.4.0 it returned "other")
+
+Since version 0.4.0, operating system is returned as an array of two values: first value is OS short identifier and second value is OS version.
+
+Browser engine identifiers
+--------------------------
+
+    * gecko Mozilla Gecko
+    * mozold Old Netscape browsers (before 6.0)
+    * khtml KHTML-based browsers (Konqueror, Safari and Omniweb>=4.5)
+    * msie Microsoft Internet Explorer
+    * omniweb Omniweb (<4.5)
+    * opera Opera
+    * links Links
+    * elinks ELinks
+    * w3m w3m
+    * java Java Runtime Environment or Java Development Kit
+    * icab iCab
+    * netfront NetFront
+    * dillo Dillo (server-side detection only)
+    * lynx Lynx (server-side detection only)
+    * robot Any bot (GoogleBot, MSNBot...) (server-side detection only)
+    * other Unknown
+
+Bot identifiers
+---------------
+
+    * googlebot GoogleBot
+    * googlebotimg GoogleBot-Image
+    * msnbot MSN Search bot
+    * turnitinbot TurnitinBot
+    * zyborgbot Zyborg
+    * wget wget
+
+Please note that:
+
+    * bots do not execute JavaScript, so you only can find bots if running jsbrwsniff at server-side
+    * These bot identifiers are reported as the browser identifier
+    * Bot version (if available) is reported as the browser version
+    * Browser engine name is "robot" for every bot
+    * Browser engine version is -1 for every bot
+
+
+Javascript version
+------------------
+
+Since version 0.5.3, function jsVersion() returns the highest version of the Javascript language 
+the browser *claims* to support. Please note this is not reliable information, as different 
+browsers may implement different objects or implement fake objects (i. e. checking for the existence 
+of the object will return true, doing something with it would do nothing).
+
+
+Pop-up blocker detection
+------------------------
+
+To find out if the client has a pop-up blocker installed, jsbrwsniff tries to open a 1x1 window using the popupsAllowed() function.
+
+When using this information, please note popups may be allowed for one site but disabled for another. It is 
+therefore very important the code from which you open your popups and the jsbrwsniff.js file be on the same 
+site or subsite (subdirectories -mysite.com/js/- are fine, subsites -js.mysite.com- are not).
+
+
+Other functions
+---------------
+
+    * getMajorVersion(version_string) returns whatever there is before the first "." or -1 if an empty string is passed
+    * getMinorVersion(version_string) returns whatever there is after the first "." or -1 if an empty string is passed
+    * getFullUAString() returns a string containing the full user agent string
+    * getGeckoVersion() returns Gecko engine version. Be careful, it does NOT verify the browser is gecko-based.
+    * getMSIEVersion() returns MSIE engine version. Be careful, it does NOT verify the browser is MSIE-based.
+    * hasFlashPlugin() returns an array of two values:
+          o First field is 2 (Flash is installed), 1 (Flash is not installed) or 0 (don't know if Flash is installed)
+          o Second field is a number from 0 to X, telling which Flash version is installed. If the first field is 0, this field is also 0.

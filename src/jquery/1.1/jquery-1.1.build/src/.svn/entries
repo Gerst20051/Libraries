@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1074"
+   name=""
+   committed-date="2007-01-14T22:51:55.746098Z"
+   url="svn://jquery.com/tags/1.1/src"
+   last-author="joern"
+   kind="dir"
+   uuid="71c7bbeb-8c0f-0410-8431-c31947b64af3"
+   repos="svn://jquery.com"
+   revision="1075"/>
+<entry
+   name="jquery"
+   kind="dir"/>
+<entry
+   name="selector"
+   kind="dir"/>
+<entry
+   name="event"
+   kind="dir"/>
+<entry
+   name="ajax"
+   kind="dir"/>
+<entry
+   committed-rev="1023"
+   name="outro.js"
+   text-time="2007-01-15T02:25:58.000000Z"
+   committed-date="2007-01-12T03:53:55.147212Z"
+   checksum="7d9d25f71cb8a5aba86202540a20d405"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="966"
+   name="intro.js"
+   text-time="2007-01-15T02:25:58.000000Z"
+   committed-date="2007-01-09T21:21:01.508295Z"
+   checksum="e1ffec103c7d2e279fec44ccc4a1fa3a"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   name="fx"
+   kind="dir"/>
+</wc-entries>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1074"
+   name=""
+   committed-date="2007-01-14T22:51:55.746098Z"
+   url="svn://jquery.com/tags/1.1/src/ajax"
+   last-author="joern"
+   kind="dir"
+   uuid="71c7bbeb-8c0f-0410-8431-c31947b64af3"
+   repos="svn://jquery.com"
+   revision="1075"/>
+<entry
+   committed-rev="1074"
+   name="ajax.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-14T22:51:55.746098Z"
+   checksum="211d5a209c68e5dd82fd318d0a951b13"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="1074"
+   name="ajaxTest.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-14T22:51:55.746098Z"
+   checksum="99cd435b73ac466b331186ae79de3c5f"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+</wc-entries>

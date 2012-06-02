@@ -1,0 +1,196 @@
+0.5.3 Released
+
++ Added Javascript version detection (client-side only)
+
++ Added popup-blocker detection (client-side only)
+
+0.5.2 Released
+
++ Added support for Playstation 3 (identifier: playstation3) (all versions)
+
+0.5.1 Released
+
+\ Fixed Flash plugin detection in non-Gecko browsers
+ 
+============
+0.5 Released
+
++ Now also works at server-side
+
++ Identifies Macromedia Flash plug-in
+
++ Added support for NetCaptor (identifier: netcaptor) (all versions)
+
++ Added support for Lynx (identifier: lynx) (all versions) (only server-side)
+
++ Added support for Dillo (identifier: dillo) (all versions) (only server-side)
+
++ Added support for GoogleBot (identifier: googlebot) (only server-side)
+
++ Added support for GoogleBot-Image (identifier: googlebotimg) (only server-side)
+
++ Added support for MSNBot (identifier: msnbot) (only server-side)
+
++ Added support for TurnitinBot (identifier: turnitinbot) (only server-side)
+
++ Added support for ZyborgBot (identifier: zyborgbot) (only server-side)
+
++ Added support for wget (identifier: wget) (only server-side)
+
++ Added support for HP-UX (identifier: hpux) (all versions)
+
++ Added version detection for OpenVMS
+
++ Added version detection for SunOS
+
++ Added version detection for AmigaOS
+
++ Added version detection for OS/2
+
++ Added getMSIEVersion() to find out Microsoft Internet Explorer and MSIE-powered browsers engine version
+
++ Provides test strings for browsers and bots (see "test strings" directory)
+
+\ Windows NT 5.2 is now reported as Windows Server 2003 (identifier: win2k3), instead of Longhorn
+
+\ Fixed: PowerMarks browser-engine version was wrongly reported
+
+\ Many fixes and improvements in documentation
+
+
+==============
+0.4.1 Released
+
++ Added support for K-Meleon (identifier: kmeleon) (all versions)
+
++ Added support for Camino (identifier: camino) (all versions)
+
++ Added support por PowerMarks (identifier: powermarks) (all versions)
+
++ Added support for Java (identifier: java) (all versions), both as browser and as operating system
+
++ Added support for Crazy Browser (identifier: crazy) (all versions)
+
++ Added support for iCab (identifier: crazy) (all versions)
+
++ Added support for MyIE2 (identifier: crazy) (all versions)
+
++ Added support for MSN Explorer (identifier: msn) (all versions)
+
++ Added support for Avant Browser (identifier: avantbrowser) (all versions)
+
++ Added support for NetFront (identifier: netfront) (all versions)
+
++ Added support for PalmOS (identifier: palmos) (no version information yet, thought)
+
++ Added support for Symbian OS (identifier: symbian) (all versions)
+
++ Added support for Irix (identifier: irix) (all versions)
+
+\ Fixed: SunOS was reported as "unix" instead of "sunos"
+
+\ Fixed: Linux kernel version was wrongly reported if second and/or third field were > 9
+
+* Changed: Opera browser engine version is now the same as the browser version (previously it was "unknown")
+
+* Changed: MS Internet Explorer engine version is now the same as the browser version (previously it was "unknown")
+
+* Changed: w3m engine version is now the same as the browser version (previously it was "unknown")
+
+* Changed: elinks engine version is now the same as the browser version (previously it was "unknown")
+
+* Changed: links engine version is now the same as the browser version (previously it was "unknown")
+
+* Changed: Omniweb browser engine and browser engine version were not reported in previous versions of jsbrwsniff
+
+* Changed: OmniWeb's browser engine is reported as being "khtml" if version > 4.5.
+  Previous versions always tried to report "omniweb" (but they didn't because of a bug in brwsniff.js)
+
+* Changed: detection order for operating system.
+
+
+* Changed: keep moving to regexp's for detection. As a result, brwsniff.js shrunk 12%
+
+============
+0.4.0a Released
+
+\ Rectified a bad construction that prevented detection of Gecko version
+
+============
+0.4 Released
+
+
++ Added support for ELinks (identifier: elinks) (all versions)
+
++ Added support for w3m (identifier: w3m) (all versions)
+  (PLEASE NOTE THAT W3M ONLY SUPPORTS JAVASCRIPT IF USING W3M-JS)
+
++ Added support for Links (identifier: links) (all versions)
+
++ Added major and minor version number detection for Netscape 4.x
+
++ Identify Linux, FreeBSD, OpenBSD and Windows version
+
+* Changed: short identifier for Netscape 4.x is no longer "netscape4" but "netscape"
+
+* Changed: short identifier for unknown browsers if no longer "other" but "unknown"
+
+* Changed detection method (the navigator.appName was a mess to deal with
+  and failed again and again). Now it works (right) for every browser.
+
+==============
+0.3.5 Released
+
+\ Bug fixing and code optimization
+
++ Added a function to get the full User Agent string: getFullUAString()
+
++ Added spuport for OmniWeb (identifier: omniweb) (at least 4.x, haven't tried with lower versions)
+
++ API changes from 0.3 (DON'T CARE ABOUT THIS IF YOU WERE USING 0.2 OR EARLIER)
+
+============
+0.3 NOT RELEASED (UGLY API)
+
++ Added support for Epiphany (identifier: epiphany) (all versions)
+
++ Added support for Chimera (identifier: chimera) (all versions)
+
++ Added support for Safari (identifier: safari) (all versions)
+
++ Added support for Mozilla Firefox (identifier: firefox) (all versions)
+
++ Added functions to get the browser engine and the browser engine version
+
++ Added operating system detection
+
+
+============
+0.2 Released
+
++ Added two functions to have separated major and minor version
+
++ Added support for Netscape 6.x (all versions) and 7.x (all versions)
+  -- ONLY SOME TEST, BUT IT SHOULD WORK
+
++ Added support for Mozilla Seamonkey (identifier: "mozsea") (all versions)
+  -- ONLY SOME TEST, BUT IT SHOULD WORK
+
++ Added support for Galeon (all versions)
+  -- ONLY SOME TEST, BUT IT SHOULD WORK
+
++ Added support for Mozilla Firebird and Mozilla Phoenix (former name of
+  Mozilla Firebird) (all versions)
+  -- TESTED AND WORKING
+
+* Use only navigator.userAgent for identification (removed navigator.appName
+  and navigator.appVersion from brs)
+  -- TESTED AND WORKING
+
+* Browser version (br[1]) is now returned as type String (formerly it was a
+  float, but it was a mess because of non-numeric versions).
+
+=============
+0.1 Released
+
++ First version

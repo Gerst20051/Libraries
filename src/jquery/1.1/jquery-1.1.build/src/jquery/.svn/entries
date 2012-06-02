@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1073"
+   name=""
+   committed-date="2007-01-14T22:37:33.216563Z"
+   url="svn://jquery.com/tags/1.1/src/jquery"
+   last-author="joern"
+   kind="dir"
+   uuid="71c7bbeb-8c0f-0410-8431-c31947b64af3"
+   repos="svn://jquery.com"
+   revision="1075"/>
+<entry
+   committed-rev="1065"
+   name="coreTest.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-14T19:30:40.319901Z"
+   checksum="4192e4905ab5d20c773a385005b62f40"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="1073"
+   name="jquery.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-14T22:37:33.216563Z"
+   checksum="631a399a26d7f81d8e8ab9c5eb0118c1"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+</wc-entries>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Tutorial: NodeList</title>
+		<link rel="stylesheet" href="style.css" media="screen">
+		<link rel="stylesheet" href="../../../demo.css" media="screen">
+		<!-- load dojo and provide config via data attribute -->
+		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js" data-dojo-config="isDebug:true,parseOnLoad:true">
+		</script>
+		<script>
+			function oddForEach(){
+				dojo.query(".odd").forEach(function(node){
+					// For each ndoe with a class of "odd",
+					// remove the class "blue" and add the class "red"
+					dojo.removeClass(node, "blue");
+					dojo.addClass(node, "red");
+				});
+			}
+
+			function oddAddBlue(){
+				// For each node wiht a class of "odd",
+				// remove the class "red" and add the class "blue"
+				dojo.query(".odd").removeClass("red").addClass("blue");
+			}
+
+			function evenAddBlue(){
+				// For each node with a class of "even",
+				// add the class "blue"
+				dojo.query(".even").addClass("blue");
+			}
+
+			function evenStyle(){
+				// For each node with a class of "even",
+				// Set its color CSS style to "white" and add a class of "italic"
+				dojo.query(".even").style("color", "white").addClass("italic");
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Tutorial: NodeList</h1>
+		<p>Click the buttons below to execute the corresponding query and NodeList functions.</p>
+		<button onclick="oddForEach();">dojo.query(".odd").forEach(...)</button><br />
+		<button onclick="evenAddBlue();">dojo.query(".even").addClass("blue")</button><br />
+		<button onclick="oddAddBlue();">dojo.query(".odd").removeClass("red").addClass("blue")</button><br />
+		<button onclick="evenStyle();">dojo.query(".even").style("color", "white").addClass("italic")</button><br />
+		<br />
+		<div id="list">
+			<div class="odd">One</div>
+			<div class="even">Two</div>
+			<div class="odd">Three</div>
+			<div class="even">Four</div>
+			<div class="odd">Five</div>
+			<div class="even">Six</div>
+		</div>
+	</body>
+</html>

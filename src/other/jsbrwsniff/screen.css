@@ -1,0 +1,116 @@
+body {
+    font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;    
+    font-size: small;
+    background-color: #ffffff;    
+    color: #555555;
+    margin-top: 3em;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+a:link {
+    text-decoration: none;
+    color: #555555;
+    background-color: #ffffee;
+}
+
+a:visited {
+    text-decoration: none;
+    background-color: #ffffee;
+}
+
+a:hover {
+    background-color: #eeeeee;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+a img {
+    text-decoration: none;
+    border: 0;
+}
+
+p {
+    text-align: justify;    
+}
+
+h3 {
+    font-weight: 700;
+}
+
+ul .squared {
+    list-style-type: square;
+}
+
+.selectedItem {
+    font-weight: 700;
+}
+
+.indented {
+    padding-left: 2em;
+}
+
+.stroken {
+    text-decoration: line-through;
+}
+
+.access {
+    text-decoration: underline;
+}
+#main {
+    border: 1px solid #aaaaaa;    
+    padding: 1em;
+}
+
+#footer {
+    margin-top: 1em;
+    border: 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+#navigatorMenu {            
+    list-style: none;
+    line-height: 1em;    
+    
+}
+
+/* Internet Explorer 5 and 6 don't support negative margins, 
+   so we need to make some ugly hacks. First one is for IE6 */
+html>body #navigatorMenu li {
+    margin-top: -0.8em;
+    voice-family: "\"}\"";
+    /* This one is for IE 5 */
+    margin-top: -0.8em;
+}
+
+#navigator {
+    padding-top: 0em;
+}
+
+#navigatorMenu li {    
+    float: left;
+    padding-top: 0em;    
+}
+
+#navigatorMenu a {
+    display: block;
+    color: #444444;
+    text-decoration: none;    
+    background: #dddddd;    
+    padding: 0.25em 1em;
+    border-left: 0.12em solid #aaaaaa;
+    border-top: 0.1em solid #ffffff;
+    border-right: 0.05em solid #ffffff;    
+}
+
+#navigatorMenu li:first-child a {
+    border-left: 0.05em solid #ffffff;
+}
+
+#navigatorMenu a:hover {
+    background-color: #eeeeee;
+}

@@ -1,0 +1,4 @@
+// set up track arrayvar handleArr = new Object();handleArr["track1"]=250; // set initial value
+// set up stylevar track1Span = new Fx.Style($('track1span'),'width',{duration:0});
+var slider1 = new Slider($('track1'),$('handle1'),{	steps:500,  // there are 250 steps in the track	offset:0, // offset of zero fits the handle into the track	onChange: function(pos){		track1Span.set(pos);		handleArr['track1'] = parseInt(pos); // store position		updateTestDiv(); // run function to do something	}}).set(handleArr["track1"]); // set initial position
+// function to update test tag with handle positionfunction updateTestDiv(pos){	$('value').innerHTML = handleArr['track1'];}

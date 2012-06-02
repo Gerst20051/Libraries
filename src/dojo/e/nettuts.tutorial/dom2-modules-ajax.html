@@ -1,0 +1,139 @@
+<html>
+<head>
+  <title> Dig into Dojo, part 2 </title>
+  <style>
+    body {
+      font: 16px/1.5 helvetica;
+      color: #474747;
+    }
+ 
+    #test {
+      border: 1px solid #ccc;
+      background: #ececec;
+      width: 250;
+      padding: 20px;
+      text-align: center;
+    }
+    .active {
+      background: maroon;
+    }
+  </style>
+</head>
+<body>
+  <div id='content'>
+    <h1> Dig into Dojo Episode 2</h1>
+ 
+    <p id='test'> Dojo Tutorial </p>
+ 
+    <div> An Unsemantic Div </div>
+ 
+    <ul>
+      <li> A Child! 1 </li>
+      <li> A Child! 2 </li>
+      <li> A Child! 3 </li>
+      <li> A Child! 4 </li>
+    </ul>
+ 
+    <p> Another Paragraph </p>
+  </div>
+ 
+  <script src='http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js.uncompressed.js'></script>
+<script>
+// dojo.require('dojo.NodeList-data');
+
+dojo.require('dojo.NodeList-data');
+
+var ps = dojo.query('p');
+ps.data('key', 'value');
+ps.data('key'); // ['value', 'value']
+
+dojo.query('#test').data('handle', function () { /* action! */ });
+dojo.query('p').at(0).data('name', 'Dojo Toolkit');
+dojo.query('p').at(1).data('age', 1.6);
+dojo.query('p').data; // returns: [ { handle: function () { /* action! */}, name: 'Dojo Toolkit' }, { age: 1.6 }]
+
+// assuming the above:
+var ps = dojo.query('p');
+ps.removeData();
+ps.data(); // [ {}, {} ]
+
+
+// dojo.require('NodeList-fx');
+
+jQuery('#test').fadeOut(2000);
+dojo.query('#test').fadeOut({ auto: true, duration: 2000, onEnd: function (node) { dojo.style(node, 'display', 'none'); } });
+// alternately:
+dojo.query('#test').fadeOut({ duration: 2000, onEnd: function (node) { dojo.style(node, 'display', 'none'); } }).play();
+
+dojo.query('#test').animateProperty({ duration: 2000, properties: { backgroundColor: 'red' } }).play();
+
+dojo.require('dojo.fx.easing');
+dojo.query('#test').animateProperty({ delay: 4000, properties: { width: 1200  }, easing: dojo.fx.easing.bounceOut, onEnd: function () { alert('done'); }, auto: true });
+
+dojo.query('#test').animateProperty({
+   properties: {
+      fontSize:        { start: 20,    end: 120 },
+      backgroundColor: { start: 'red', end: 'blue' },
+      width:           { start: 100,   end: 1200 }
+   },
+   easing: dojo.fx.easing.quintIn,
+   duration: 10000
+}).play();
+
+
+// dojo.require('dojo.NodeList-manipulate');
+
+// <p id='test'> Dojo Tutorial </p>
+dojo.query('#test').innerHTML('<strong> Unicorns! </strong>');
+// <p id='test'><strong> Unicorns! </strong></p>
+ 
+// <p id='test'> Dojo Tutorial </p>
+dojo.query('#test').text('<strong> Unicorns! </strong>');
+// <p id='test'>&amp;lt;strong> Unicorns! &amp;lt;/strong></p>
+
+// <p id='test'> Dojo Tutorial </p>
+dojo.query('#test').append('<strong> Unicorns! </strong>');
+// <p id='test'> Dojo Tutorial <strong> Unicorns! </strong></p>
+ 
+// <p id='test'> Dojo Tutorial </p>
+dojo.query('#test').prepend(dojo.query('p').at(1));
+// <p id='test'><p>Another Paragraph</p> Dojo Tutorial </p>
+
+dojo.query('h1').appendTo('p');
+
+// <p id='test'> Dojo Tutorial </p>
+dojo.query('#test').after('<em> NETTUTS+ </em>');
+// <p id='test'> Dojo Tutorial </p><em> NETTUTS+ </em>
+ 
+// <p> Another Paragraph </p>
+dojo.query('h1').insertBefore(dojo.query('p:last-of-type'));
+// <h1> Intro to Dojo Episode 2</h1> <p> Another Paragraph </p>
+
+dojo.query('p').wrap('<strong>'); // all paragraphs will be wrapped in <strong>, as unsemantic as that is
+
+dojo.query('p').wrapApp('<div class=&#39;active&#39;></div>'); // if you add the closing tag, Dojo will figure out what you mean
+
+dojo.query('body').wrapInner('<div id=&#39;main&#39;>');
+
+
+// dojo.require('dojo.NodeList-traverse');
+
+dojo.query('ul').children(); // four <li>s
+
+dojo.query('li').parent(); // [<ul>]
+dojo.query('li').parents(); // [<ul>, <div id='content'>, <body>, <html>]
+
+dojo.query('#test').siblings(); // [<h1>, <div>, <ul>, <p>]
+
+dojo.query('#test').next(); // [<div>]
+dojo.query('p').prev(); // [ <h1>, <ul> ]
+dojo.query('li').prevAll(); // [<li> A Child! 1 </li>, <li> A Child! 2 </li>, <li> A Child! 3 </li>]
+
+dojo.query('li').first(); //[<li> A Child! 1 </li>]
+dojo.query('li').last(); //[<li> A Child! 4 </li>]
+
+dojo.query('li').even(); // [<li> A Child! 2 </li>, <li> A Child! 4 </li> ]
+dojo.query('li').odd(); // [<li> A Child! 1 </li>, <li> A Child! 3 </li> ]
+</script>
+</body>
+</html>

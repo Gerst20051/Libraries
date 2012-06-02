@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1069"
+   name=""
+   committed-date="2007-01-14T21:49:59.803785Z"
+   url="svn://jquery.com/tags/1.1/src/event"
+   last-author="john"
+   kind="dir"
+   uuid="71c7bbeb-8c0f-0410-8431-c31947b64af3"
+   repos="svn://jquery.com"
+   revision="1075"/>
+<entry
+   committed-rev="1069"
+   name="event.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-14T21:49:59.803785Z"
+   checksum="8ca7229dc66cc124f9d0c9dfa96b438b"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="780"
+   name="eventTest.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2006-12-28T11:37:07.814779Z"
+   checksum="496a2fbf9e140ede2492561c0a7c411b"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+</wc-entries>

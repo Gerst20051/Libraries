@@ -1,0 +1,166 @@
+<html>
+<head>
+    <title> Intro to Dojo, part 1 </title>
+    <style>
+       .highlight {
+         background: yellow;
+         font-weight: bold;
+         font-size: 1.5em;
+      }
+   </style>
+</head>
+<body>
+    <h1> A Heading </h1>
+ 
+    <ul id="nav">
+      <li> <a href="/">Home</a> </li>
+      <li class="highlight"> <a href="/portfolio"> Portfolio </a> </li>
+      <li> <a href="/about">About</a> </li>
+      <li> <a href="/contact">Contact</a> </li>
+    </ul>
+ 
+    <p> This is a paragraph (albeit a very <em>short</em> paragraph). Also, <a href="http://google.com">here&#39;s a link</a>. </p>
+   <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js"></script>
+<script>
+// Finding Elements
+
+dojo.query("a");
+
+dojo.query("a", "nav"); // returns a `NodeList` of 4 <a>s
+
+dojo.query("a"); // a `NodeList` of 5 <a>s
+dojo.query("p").query("a"); // a `NodeList` of 1 <a>
+
+dojo.byId("nav");
+
+dojo.body();
+
+
+// Creating Elements
+
+var h = dojo.create("h2"); // <h2></h2>
+
+var h = dojo.create("section", { role: "banner", innerHTML: "Learning Dojo"});
+// <section> role=?"banner">?Learning Dojo?</section>?
+
+dojo.create("p", { innerHTML: "Hi there!"}, dojo.body(), "first");
+dojo.create("h1", { innerHTML: "Heading"}, dojo.query("h1")[0], "before");
+
+
+// Modifying Nodes
+
+var navUl = dojo.query("p")[0];
+dojo.attr(navUl, {
+   onclick : function () {
+      alert("Learning Dojo!");
+   },
+   role: "banner",
+   style : {
+      backgroundColor: "red",
+      fontSize: "2em"
+   }
+});
+
+dojo.attr("nav", "className", "module"); // first parameter is an id string
+
+dojo.attr(dojo.byId("nav"), "id"); // "nav"
+
+var items = dojo.query("li");
+items.attr("innerHTML"); // [" <a href="/">Home</a>", " <a href="/portfolio">Portfolio</a>", " <a href="/about">About</a>", " <a href="/contact">Contact</a>"]
+items.attr({ className: "btn" });
+
+dojo.removeAttr("nav", "id");
+dojo.query("#nav").removeAttr("id");
+
+var nav = dojo.byId("nav");
+dojo.addClass(nav, "selected");
+
+dojo.query("li").removeClass(["selected", "highlighted"]);
+
+dojo.query("p").replaceClass("newClass", "oldClass");
+
+
+// Removing Nodes
+
+var navList = dojo.byId("nav");
+dojo.destroy(navList);
+// or, easier:
+dojo.destroy("nav");
+
+dojo.query("li").orphan();
+
+dojo.query("li").orphan("li:first-of-type"); // will only orphan the first <li>
+
+
+// Moving / Duplicating Nodes
+
+var nav = dojo.byId("nav"), p = dojo.query("p")[0];
+dojo.place(nav, p, "after"); // moves `nav` to right after `p` in the DOM
+
+dojo.query("p").place(dojo.body(), "first");
+
+var u2 = dojo.clone( dojo.byId("nav") );
+dojo.attr(u2, "id", "nav2");
+dojo.place(u2, dojo.body(), "first");
+
+var o1 = { one: "one"}, o2 = dojo.clone(o1);
+o1 === o2; // false
+
+dojo.query("li").adopt("p", "only");
+
+
+// Iterating Over Nodes
+
+dojo.query("li").forEach(function (element, index, arr) {
+   // do your thing
+});
+
+dojo.forEach([1,2,3], function (item) {
+   // act here
+});
+
+dojo.map([1,2,3], function (item) {
+   return item * item;
+}); // [1, 4, 9]
+
+dojo.query("li").filter(".highlight"); // NodeList with one <li class="selected">   
+
+dojo.query("li").filter(function (el) {
+   return dojo.query("a", el)[0].innerHTML === "About";
+}); // returns a NodeList that holds only the list item with the text "About"
+
+dojo.filter(["Nettuts", "Psdtuts", "Phototuts"],  function (el, idx, arr) {
+   return el.slice(0,1) === "P"
+}); // ["Psdtuts", "Phototuts"]
+
+
+// Working With Events
+
+dojo.query("h1").onclick(function () {
+   alert("Learning Dojo");
+});
+
+dojo.query("h1").connect("onclick", function (e) {
+   alert("learning Dojo");
+});
+
+var h = dojo.query("h1")[0]; // or dojo.byId("some_element"), for example
+dojo.connect(h, "onclick", function () {
+   alert("learning Dojo");
+});
+
+var h = dojo.query("h1")[0],
+handle = dojo.connect(h, "onclick", function () {
+   alert("learning Dojo");
+   dojo.disconnect(handle);
+});
+
+dojo.subscribe("myTopic", function (data, moreData) {
+   alert(data);
+   console.log(moreData);
+});
+
+dojo.publish("myTopic", ["some data", "some more data"]);
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1011"
+   name=""
+   committed-date="2007-01-11T18:40:34.117637Z"
+   url="svn://jquery.com/tags/1.1/build/docs/js"
+   last-author="joern"
+   kind="dir"
+   uuid="71c7bbeb-8c0f-0410-8431-c31947b64af3"
+   repos="svn://jquery.com"
+   revision="1075"/>
+<entry
+   committed-rev="1011"
+   name="doc.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-11T18:40:34.117637Z"
+   checksum="a512082848e5085b46976cd0c079cd68"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="177"
+   name="tooltip.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2006-08-13T03:05:31.196907Z"
+   checksum="79670a8cacbef7e13f3a216687e51d44"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="901"
+   name="pager.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-06T22:34:12.500083Z"
+   checksum="de73c7b7c5df2d0f20ca5abb3d2c6b7a"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+</wc-entries>

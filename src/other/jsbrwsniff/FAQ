@@ -1,0 +1,51 @@
+===
+FAQ
+===
+
+* Which are the requirements to use the Javascript Browser Sniffer?
+
+You need Javascript 1.2 or newer (jsbrwsniff makes extensive use of the match and search methods).
+
+Microsoft Internet Explorer 4.0, Netscape 4.0, any Gecko-based browser, Konqueror, Safari, Microsoft Internet Information Services 4.0, Netscape Enterprise Server 3.0 and a lot more suport Javascript 1.2.
+
+* Does it worth to upgrade to 0.5 from 0.4.1?
+
+Well, it depends on you. There are many improvements in version 0.5, but most of the users of jsbrwsniff don't need them. The most significant improvement in 0.5 is server-side support and Macromedia Flash plug-in detection. Every other new feature or fix is marginally interesting.
+
+On the bright side, you won't lose anything by upgrading: 0.4.1 is 13252 bytes (2287 bytes if you use modgzip), and 0.5 is 16587 bytes (2957 bytes if you use modgzip). Your users won't even notice the increase in size.
+
+* You changed the values returned by the API and I do not need the features you added with version 0.4. Why should I upgrade from 0.3.5 to 0.4?
+
+Because earlier versions used a bad detection method, which was proven to fail more than one could expect. Upgrade. Now.
+
+* What happened to version 0.3? Did it ever exist?
+
+Yes, it existed and I used it in a couple of projects in the SMB I worked for.
+
+Version 0.3 returned the operating system in the br[] array, and that was ugly. I had that version ready as of February 10th 2004, but I kept it frozen because I didn't like the way the API was going.
+
+When I had some free time to sit down and think about it, I came to the obvious conclusion: I could not release that version with that API and then change it in the next version. That's why 0.3 existed, but was never released.
+
+* Which browser engine version do you report?
+
+    * For Gecko, the Gecko version in cvs format (yyyymmdd)
+    * For Omniweb, the version number that appears after the dash
+    * For Safari, AppleWebKit's version number. THIS HAS CHANGED: JsBrwSniff<0.4.1 reported "unknown".
+    * For Crazy Browser, MS Internet Explorer's version
+    * For other browsers (namely MSIE, Konqueror, aso), while I couldn't figure how to report the internal version, I will return the browser version. THIS HAS CHANGED: JsBrwSniff<0.4.1 reported "unknown"
+
+* I need help!!!
+
+Look at the forum (http://sourceforge.net/forum/?group_id=99451) or send me an e-mail (paugq AT users DOT sourceforge DOT net)
+
+* Why are you doing this?
+
+Because I needed a browser sniffer for a web I'm creating. I didn't find anything fitting my needs, therefore I wrote it.
+
+* Why LGPL? GPL is the way to go(TM)!
+
+If I followed GNU Foundation's advise, I would have released JsBrwSniff under a GPL license. But I think it would have discouraged its use in commercial projects, so I released it as LGPL. Maybe I'll make it GPL, depending on popular demand with sensible reasons.
+
+* Can I help or collaborate?
+
+Certainly. Contact me (paugq AT users DOT sourceforge DOT net)

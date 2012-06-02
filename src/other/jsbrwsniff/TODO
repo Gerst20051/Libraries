@@ -1,0 +1,9 @@
+- Detectar la distribució de Linux (debian, mandrake, etc)
+- Detectar la versió de JavaScript
+- Suport de NeoPlanet, BackArrow (http://backarrow.sourceforge.net/), HotJava
+- Funcions d'API per a aquestes informacions:
+   navigator.platform
+   navigator.cpuClass
+   navigator.onLine
+   caps.connectionType
+- Detectar plugin de SVG

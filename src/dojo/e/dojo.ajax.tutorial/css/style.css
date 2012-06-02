@@ -1,0 +1,81 @@
+body, html {
+	width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+}
+
+#borderContainer {
+	width: 100%; height: 100%;
+}
+
+#topBar {
+	margin: 0; padding: 0; border: none;
+}
+
+h1 {
+	margin: 0; padding: 10px; background-color: #003267; color: #fff;
+}
+
+#mainSection {
+	margin: 0; padding: 0; background-color: #eee; border: none;
+}
+
+#treeSection {
+	width: 160px; border-top: none; border-bottom: none;
+}
+
+#mainContainer {
+	border: none; padding: 0;
+}
+
+#gridSection {
+	height: 160px; border-top: none; padding: 0;
+}
+
+.dojoxGrid table {
+	margin: 0;
+}
+
+.dojoxGrid td {
+   	border-style:none !important;
+}
+
+.claro .dojoxGridHeader .dojoxGridCellFocus {
+   	border: 1px solid #BCBCBC !important;
+}
+
+.claro .dojoxGridCellFocus {
+   	border: none !important;
+}
+
+.listingarea .dojoxGridCellFocus .dojoxGridCellOver {
+   	border:none !important;
+}
+
+.listingarea .dojoxGridRowOver{
+   	border-bottom-color: transparent !important;
+  	border-top-color: transparent !important;
+}
+
+.listingarea .dojoxGridRowOver .dojoxGridCell {
+   	background-color: inherit;
+   	color:inherit;
+}
+
+span.dojoxGridNoData {
+	color: red;
+}
+
+h2 {
+	font-size: 2.2em;
+	margin: 0; padding: 0;
+}
+
+#contactView {
+	border-bottom: none;
+}
+
+#contactDetail th {
+	text-align: left;
+	color: #888;
+}
+
+:focus { outline: none; }

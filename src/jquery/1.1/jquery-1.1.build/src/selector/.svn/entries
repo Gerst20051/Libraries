@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1069"
+   name=""
+   committed-date="2007-01-14T21:49:59.803785Z"
+   url="svn://jquery.com/tags/1.1/src/selector"
+   last-author="john"
+   kind="dir"
+   uuid="71c7bbeb-8c0f-0410-8431-c31947b64af3"
+   repos="svn://jquery.com"
+   revision="1075"/>
+<entry
+   committed-rev="1069"
+   name="selector.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-14T21:49:59.803785Z"
+   checksum="28156d75719394b82a8eb23dcd1dc64b"
+   last-author="john"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+<entry
+   committed-rev="904"
+   name="selectorTest.js"
+   text-time="2007-01-15T02:25:57.000000Z"
+   committed-date="2007-01-07T10:26:58.444237Z"
+   checksum="d4e9c8670cf67a028126aeb4640ad354"
+   last-author="joern"
+   kind="file"
+   prop-time="2007-01-15T02:25:57.000000Z"/>
+</wc-entries>

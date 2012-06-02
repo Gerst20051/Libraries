@@ -1,0 +1,56 @@
+Ask Jeeves
+==========
+ 
+Mozilla/2.0 (compatible; Ask Jeeves)
+
+
+Fast Enterprise Crawler
+=======================
+
+FAST Enterprise Crawler/6 (crawler@fast.no)
+
+
+Fast Webcrawler
+===============
+
+FAST-WebCrawler/3.6 (atw-crawler at fast dot no; http://fast.no/support/crawler.asp)
+FAST-WebCrawler/3.8 (crawler at trd dot overture dot com; http://www.alltheweb.com/help/webmaster/crawler)
+
+GoogleBot
+=========
+
+Googlebot/2.1 (+http://www.googlebot.com/bot.html)
+Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+
+
+GoogleBot Image
+===============
+
+Googlebot-Image/1.0 (+http://www.googlebot.com/bot.html)
+
+
+MSNBot
+======
+
+MSNBOT/0.1 (http://search.msn.com/msnbot.htm)
+msnbot/0.11 (+http://search.msn.com/msnbot.htm)
+
+
+TurnitinBot
+===========
+
+TurnitinBot/1.4 (http://www.turnitin.com/robot/crawlerinfo.html)
+TurnitinBot/1.5 http://www.turnitin.com/robot/crawlerinfo.html
+
+wget
+====
+
+Wget/1.9.1
+
+
+Zyborg
+======
+
+Mozilla/4.0 compatible ZyBorg/1.0 (wn.zyborg@looksmart.net; http://www.WISEnutbot.com)
+Mozilla/4.0 compatible ZyBorg/1.0 Dead Link Checker (wn.zyborg@looksmart.net; http://www.WISEnutbot.com)
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Dig into Dojo | Episode 4 </title>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css" />
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/grid/resources/Grid.css" />
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/grid/resources/claroGrid.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="claro">
+  <div id="main">
+
+    <div id="settings">
+      <p>Choose the sites you'd like to include:</p>
+      <ul>
+        <li><input type="checkbox" value="aetuts" /> Aetuts+</li>
+        <li><input type="checkbox" value="cgtuts" /> Cgtuts+</li>
+        <li><input type="checkbox" value="wptuts" /> Wptuts+</li>
+        <li><input type="checkbox" value="nettuts" /> Nettuts+</li>
+        <li><input type="checkbox" value="psdtuts" /> Psdtuts+</li>
+        <li><input type="checkbox" value="phototuts" /> Phototuts+</li>
+        <li><input type="checkbox" value="audiotuts" /> Audiotuts+</li>
+        <li><input type="checkbox" value="vectortuts" /> Vectortuts+</li>
+        <li><input type="checkbox" value="flashtuts" /> Activetuts+</li>
+        <li><input type="checkbox" value="mobiletuts" /> Mobiletuts+</li>
+        <li><input type="checkbox" value="webdesigntuts" /> Webdesigntuts+</li>
+      </ul>
+      <button data-dojo-type="dijit.form.Button" data-dojo-id="update"> Update </button>
+    </div>
+
+    <div id="content">
+      <h1>Recent Tutorials from the Tuts+ Network</h1>
+      <input type="text" data-dojo-type="dijit.form.TextBox" 
+          data-dojo-id="filterBox" data-dojo-props="intermediateChanges: true" />
+
+      <div id="table"></div>
+    </div>
+
+  </div>
+
+  <script data-dojo-config="parseOnLoad: true" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
